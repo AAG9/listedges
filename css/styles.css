@@ -1,0 +1,66 @@
+@import url(http://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:300);
+
+body{
+	background-color: #F9FBE7
+}
+
+th{
+	text-align: center;
+}
+
+.form-horizontal{
+	background-color: #ffffff;
+	padding: 40px 5px 5px; 
+	border-radius: 10px;
+	border: solid 1px #6E8592;
+	box-shadow: 0 8px 6px -6px #999;
+}
+
+.btn-primary{
+	background-color: #6E8592;
+}
+
+#navbar {
+    -webkit-box-shadow: 0 8px 6px -6px #999;
+    -moz-box-shadow: 0 8px 6px -6px #999;
+    box-shadow: 0 8px 6px -6px #999;
+    background-color: #4CAF50;
+	height: 70px;
+	width: auto;
+    /* the rest of your styling */
+}
+
+#title img{
+	height: 60px;
+	width: 400px;
+	margin-top: 10px;
+}
+
+#title ul li{
+	display: inline;
+	color: white;
+}
+
+.container{
+	margin-top: 30px;
+}
+
+#authStatus ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#authStatus li {
+    display: inline;
+    padding: 10px;
+}
+
+#statusImage{
+	height: 13px;
+	width: 13px;
+}
+
+#edgeTable{
+	display: none;
+}
