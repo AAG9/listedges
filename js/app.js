@@ -5,6 +5,7 @@ var isAuthenticated = false;
 var userInfo = {};
 var edgeList = {};
 
+
 function SignIn(event){
     event.preventDefault();
     var userEmail = document.getElementById("userEmail").value;
@@ -36,6 +37,7 @@ function SignIn(event){
             }else{
                 console.log(client.responseText);
                 toastr.error(client.responseText, 'Error', { closeButton: true });
+                document.getElementById("statusImage").src = "img/offline.png";
             }
         }
     };
@@ -80,16 +82,7 @@ var getEdges = function(event){
             if(client.readyState==4){
                 if (client.status==200)
                 {
-                    $("#edgeList").html('');
-                    edgeList = JSON.parse(client.responseText);
-
-                    for (var edge = 0; edge <= edgeList.length - 1; edge++) {
-                        var row = $("<tr>");
-                        row.html("<td>"+edgeList[edge].name+"</td>"+"<td>"+edgeList[edge].description+"</td>"+"<td>"+edgeList[edge].public_addr+"</td>"+"<td>"+edgeList[edge].public_port+"</td>");
-                        $("#edgeList").append(row);
-                    }   
-                    $("#edgeTable").fadeIn();
-                    toastr.success('Retrieved list of edges!', 'Success', { closeButton: true });
+                    listEdges(client.responseText);
                 }else{
                     console.log(client.responseText);
                     toastr.error("Authenticate the user first", 'Error', { closeButton: true });
@@ -102,5 +95,43 @@ var getEdges = function(event){
         client.send();
     }else{
         toastr.error("Authenticate the user first", 'Error', { closeButton: true });
+        document.getElementById("statusImage").src = "img/offline.png";
     }
+}
+
+
+var listEdges = function(response){
+    $("#edgeList").html('');
+    edgeList = JSON.parse(response);
+
+    for (var edge = 0; edge <= edgeList.length - 1; edge++) {
+        var row = $("<tr/>");
+
+        var name = $("<td/>").text(edgeList[edge].name);
+        var description = $("<td/>").text(edgeList[edge].description);
+        var public_addr = $("<td/>").text(edgeList[edge].public_addr);
+        var public_port = $("<td/>").text(edgeList[edge].public_port);
+        
+        var edgeStatus = edgeList[edge].isConnected;
+        var status = showEdgeStatusImage(edgeStatus);
+        
+        row.append(name, description, public_addr, public_port, status);
+        $("#edgeList").append(row);
+    }   
+    $("#edgeTable").fadeIn();
+    toastr.success('Retrieved list of edges!', 'Success', { closeButton: true });
+}
+
+
+var showEdgeStatusImage = function(edgeStatus){
+    var status = $("<td/>");
+    var statusImg = "<img src='img/offline.png' alt='Edge Offline' id='statusImage'/>";
+    if(edgeStatus){
+        statusImg = "<img src='img/online.png' alt='Edge Online' id='statusImage' />";
+        status.append(statusImg);
+    }else{
+        statusImg = "<img src='img/offline.png' alt='Edge Offline' id='statusImage' />";
+        status.append(statusImg);
+    }
+    return status;
 }
