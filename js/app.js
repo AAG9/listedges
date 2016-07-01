@@ -38,6 +38,8 @@ function SignIn(event){
                 console.log(client.responseText);
                 toastr.error(client.responseText, 'Error', { closeButton: true });
                 document.getElementById("statusImage").src = "img/offline.png";
+                userInfo.authToken = "";
+                $("#edgeList").html('');
             }
         }
     };
@@ -86,6 +88,7 @@ var getEdges = function(event){
                 }else{
                     console.log(client.responseText);
                     toastr.error("Authenticate the user first", 'Error', { closeButton: true });
+                    userInfo.authToken = "";
                 }
             }
         };
